@@ -1,3 +1,17 @@
 {
-  "extends": "@react-native/typescript-config"
+  "compilerOptions": {
+    // "target": "es6",
+    // "module": "commonjs",
+    "jsx": "react",
+    // "outDir": "./dist",
+    // "rootDir": "./src",
+    // "strict": true,
+    "esModuleInterop": true,
+    // "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "extends": "@react-native/typescript-config",
+  // "include": ["src/**/*.ts", "src/**/*.tsx", "__tests__/HeaderModel.test.tsx"],
+  "exclude": ["node_modules", "dist"]
 }

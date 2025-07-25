@@ -1,0 +1,235 @@
+import {StyleSheet} from 'react-native';
+import {getScaledFont, height, width} from '../../../global/fonts';
+import {fonts} from '../../../assets';
+import colors from '../../../global/colors';
+
+export const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    width: '100%',
+  },
+  safeWrapper: {
+    flex: 1,
+    backgroundColor: colors.linerBlueGradientOne,
+  },
+  bottomWrapper: {
+    flex: 1,
+  },
+  topContainer: {
+    flexDirection: 'column',
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  socialButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 20,
+    marginTop: height(20),
+  },
+  headerWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: height(61),
+    marginHorizontal: width(32),
+    marginTop: height(16),
+    marginBottom: height(16),
+  },
+  buttonContainer: {
+    width: width(400),
+    height: height(120),
+  },
+  leftContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    width: '50%',
+  },
+  imageLogo: {
+    height: height(164),
+    width: width(164),
+    resizeMode: 'contain',
+  },
+  imageWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  rightWrappper: {
+    alignItems: 'flex-end',
+    width: '50%',
+    height: height(61),
+  },
+  readTxt: {
+    fontSize: getScaledFont(30),
+    color: colors.white,
+    fontFamily: fonts.bold,
+  },
+  headerText: {
+    fontSize: getScaledFont(18),
+    fontFamily: fonts.medium,
+    color: colors.white,
+    marginStart: width(10),
+  },
+  shareTxt: {
+    fontSize: getScaledFont(18),
+    fontFamily: fonts.medium,
+    color: colors.white,
+    marginTop: height(10),
+  },
+  logoWrapper: {
+    height: height(61),
+    width: width(45),
+  },
+  imageWrapper1: {
+    height: height(97),
+    width: width(97),
+  },
+  imageContainer: {
+    marginTop: height(20),
+    marginBottom: height(24),
+    alignItems: 'center',
+  },
+  buttonTopWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  leftWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    gap: 10,
+  },
+  headerRightWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  buttonWrapper: {
+    marginHorizontal: width(15),
+  },
+  mainTitleTxt: {
+    fontSize: getScaledFont(32),
+    fontFamily: fonts.bold,
+    color: colors.white,
+    textAlign: 'center',
+    marginTop: height(24),
+  },
+  divider: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: colors.white,
+  },
+  pendingText: {
+    fontSize: getScaledFont(16),
+    fontFamily: fonts.medium,
+    color: colors.darkYellow,
+    textAlign: 'center',
+  },
+  privacyText: {
+    fontSize: getScaledFont(16),
+    fontFamily: fonts.medium,
+    color: colors.darkYellow,
+    textAlign: 'center',
+    textDecorationStyle: 'solid',
+    textDecorationLine: 'underline',
+    textDecorationColor: colors.darkYellow,
+    marginBottom: height(3),
+  },
+  titleTxt: {
+    fontSize: getScaledFont(20),
+    fontFamily: fonts.semiBold,
+    color: colors.white,
+    marginBottom: height(16),
+  },
+  detailContanier: {
+    marginStart: width(24),
+  },
+  detailBtnWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: height(48),
+    marginBottom: height(18),
+    position: 'absolute',
+    alignSelf: 'center',
+  },
+  descriptionTxt: {
+    fontSize: getScaledFont(20),
+    fontFamily: fonts.medium,
+    color: colors.white,
+    marginTop: height(16),
+  },
+  detailsWrapper: {
+    marginTop: height(48),
+    marginBottom: height(28),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  detailBtn: {
+    width: width(205),
+    height: height(53),
+    borderRadius: getScaledFont(8),
+  },
+  congTxt: {
+    fontSize: getScaledFont(28),
+    fontFamily: fonts.semiBold,
+    color: colors.white,
+  },
+  issueTxt: {
+    fontSize: getScaledFont(20),
+    fontFamily: fonts.semiBold,
+    fontStyle: 'italic',
+    color: colors.white,
+  },
+  issueName: {
+    fontSize: getScaledFont(20),
+    fontFamily: fonts.semiBold,
+    color: colors.white,
+    fontStyle: 'italic',
+  },
+  detailsTxt: {
+    fontSize: getScaledFont(20),
+    fontFamily: fonts.bold,
+    color: colors.white,
+  },
+  topButton: {
+    height: height(65),
+    width: '100%',
+    borderTopStartRadius: getScaledFont(8),
+    borderTopEndRadius: getScaledFont(8),
+    backgroundColor: colors.lightBtnBlue,
+    justifyContent: 'center',
+    paddingHorizontal: width(24),
+    borderWidth: 1,
+    borderBottomWidth: 0,
+    borderColor: colors.btnBorderColor,
+    shadowColor: 'red',
+    shadowOffset: {width: 0, height: 5},
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  bottomButton: {
+    height: height(65),
+    width: '100%',
+    borderBottomStartRadius: getScaledFont(8),
+    borderBottomEndRadius: getScaledFont(8),
+    backgroundColor: colors.lightBtnYellow,
+    paddingHorizontal: width(24),
+    borderWidth: 1,
+    borderTopWidth: 1,
+    borderTopColor: colors.searchItemGray,
+    borderColor: colors.btnBorderColor,
+  },
+  arrowWrapper: {
+    position: 'absolute',
+    marginStart: width(20),
+    zIndex: 1,
+    top: -3,
+  },
+  bottomButtonAlign: {
+    height: height(65),
+    justifyContent: 'center',
+  },
+});

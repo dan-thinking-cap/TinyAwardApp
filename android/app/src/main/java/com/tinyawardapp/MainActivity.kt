@@ -1,4 +1,4 @@
-package com.tinyawardapp
+package com.tinyaward.app
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

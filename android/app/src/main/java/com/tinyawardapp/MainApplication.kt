@@ -1,4 +1,4 @@
-package com.tinyawardapp
+package com.tinyaward.app
 
 import android.app.Application
 import com.facebook.react.PackageList

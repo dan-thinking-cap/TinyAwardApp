@@ -1,0 +1,4 @@
+interface AppSlice {
+	appName: string;
+}
+

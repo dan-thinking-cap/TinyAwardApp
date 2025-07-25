@@ -73,3 +73,29 @@ yarn-error.log
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+
+# Unity build directories
+[Tt]emp/
+[Ll]ibrary/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+Logs/
+UserSettings/
+MemoryCaptures/
+*.apk
+*.unitypackage
+*.exe
+*.dll
+*.zip
+*.jar
+*.aab
+*.so
+*.mp4
+
+# React Native build directories
+android/.gradle/
+android/app/build/
+ios/build/
+node_modules/

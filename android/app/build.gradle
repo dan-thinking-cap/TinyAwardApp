@@ -77,13 +77,16 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.tinyawardapp"
+    namespace "com.tinyaward.app"
     defaultConfig {
-        applicationId "com.tinyawardapp"
+        applicationId "com.tinyaward.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 7
+        versionName "1.2"
+        manifestPlaceholders = [
+            appAuthRedirectScheme: "msauth.com.tinyaward.app" 
+        ]
     }
     signingConfigs {
         debug {

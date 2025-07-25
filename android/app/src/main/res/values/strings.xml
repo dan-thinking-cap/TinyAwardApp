@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">TinyAwardApp</string>
+    <string name="app_name">Tiny Award</string>
+    <string name="google_app_id">276300393258-0h18eosj3ipb37j75858dbhq355gamdd.apps.googleusercontent.com</string>
+    <string name="game_view_content_description">Game view</string>
 </resources>
