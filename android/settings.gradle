@@ -1,9 +1,27 @@
-pluginManagement { includeBuild("../node_modules/@react-native/gradle-plugin") }
-plugins { id("com.facebook.react.settings") }
+pluginManagement {
+ repositories {
+   gradlePluginPortal()
+   google()
+   mavenCentral()
+   // point at the local plugin source
+   maven { url("$rootDir/../node_modules/@react-native/gradle-plugin") }
+ }
+ // composite‑build the React Native Gradle Plugin
+ includeBuild("$rootDir/../node_modules/@react-native/gradle-plugin")
+}
+// turn on the React Native “settings” plugin so it can auto‑link your native modules
+plugins {
+  id("com.facebook.react.settings")
+}
+
+reactSettings {
+  autolinkLibrariesFromCommand()
+}
+
 extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> ex.autolinkLibrariesFromCommand() }
+
 rootProject.name = 'TinyAwardApp'
 include ':app'
-includeBuild('../node_modules/@react-native/gradle-plugin')
 
 include ':unityLibrary'
 project(':unityLibrary').projectDir = new File('../unity/builds/android/unityLibrary')
