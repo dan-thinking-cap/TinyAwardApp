@@ -42,34 +42,24 @@ const GlobalBackHandler = () => {
 
   useEffect(() => {
     const onBackPress = () => {
-      // if (navigation.canGoBack()) {
-      //   navigation.goBack(); // Navigate back if possible
-      // } else {
-      // Show exit confirmation
-      // Alert.alert(
-      //   'Exit App',
-      //   'Do you want to exit?',
-      //   [
-      //     { text: 'Cancel', style: 'cancel' },
-      //     { text: 'Exit', onPress: () => BackHandler.exitApp() }
-      //   ]
-      // );
-      // }
+      // Replace this with your actual back handler logic
       return true; // Prevent default back behavior
     };
 
+    let backHandlerListener: any;
     if (Platform.OS === 'android') {
-      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      backHandlerListener = BackHandler.addEventListener('hardwareBackPress', onBackPress);
     }
 
     return () => {
+      // Properly remove listener using .remove() on the subscription
       if (Platform.OS === 'android') {
-        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        backHandlerListener?.remove();
       }
     };
   }, [navigation]);
 
-  return null; // This component doesn't render anything
+  return null;
 };
 
 export default Navigation;
