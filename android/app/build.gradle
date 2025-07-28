@@ -1,7 +1,7 @@
  plugins {
    id "com.android.application"
    id "org.jetbrains.kotlin.android"
-   id "com.facebook.react"            // comes from your composite build
+   id "com.facebook.react"           
  }
 
 def hermesEnabled = project.hasProperty("hermesEnabled") ? project.getProperty("hermesEnabled") : "false"

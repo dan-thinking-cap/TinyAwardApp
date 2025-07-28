@@ -1,0 +1,107 @@
+diff --git a/node_modules/@azesmway/react-native-unity/android/.classpath b/node_modules/@azesmway/react-native-unity/android/.classpath
+new file mode 100644
+index 0000000..bbe97e5
+--- /dev/null
++++ b/node_modules/@azesmway/react-native-unity/android/.classpath
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<classpath>
++	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17/"/>
++	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
++	<classpathentry kind="output" path="bin/default"/>
++</classpath>
+diff --git a/node_modules/@azesmway/react-native-unity/android/.project b/node_modules/@azesmway/react-native-unity/android/.project
+new file mode 100644
+index 0000000..8a5a5d9
+--- /dev/null
++++ b/node_modules/@azesmway/react-native-unity/android/.project
+@@ -0,0 +1,34 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<projectDescription>
++	<name>azesmway_react-native-unity</name>
++	<comment>Project azesmway_react-native-unity created by Buildship.</comment>
++	<projects>
++	</projects>
++	<buildSpec>
++		<buildCommand>
++			<name>org.eclipse.jdt.core.javabuilder</name>
++			<arguments>
++			</arguments>
++		</buildCommand>
++		<buildCommand>
++			<name>org.eclipse.buildship.core.gradleprojectbuilder</name>
++			<arguments>
++			</arguments>
++		</buildCommand>
++	</buildSpec>
++	<natures>
++		<nature>org.eclipse.jdt.core.javanature</nature>
++		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
++	</natures>
++	<filteredResources>
++		<filter>
++			<id>1753475279325</id>
++			<name></name>
++			<type>30</type>
++			<matcher>
++				<id>org.eclipse.core.resources.regexFilterMatcher</id>
++				<arguments>node_modules|\.git|__CREATED_BY_JAVA_LANGUAGE_SERVER__</arguments>
++			</matcher>
++		</filter>
++	</filteredResources>
++</projectDescription>
+diff --git a/node_modules/@azesmway/react-native-unity/android/.settings/org.eclipse.buildship.core.prefs b/node_modules/@azesmway/react-native-unity/android/.settings/org.eclipse.buildship.core.prefs
+new file mode 100644
+index 0000000..68c9fab
+--- /dev/null
++++ b/node_modules/@azesmway/react-native-unity/android/.settings/org.eclipse.buildship.core.prefs
+@@ -0,0 +1,2 @@
++connection.project.dir=../../../../android
++eclipse.preferences.version=1
+diff --git a/node_modules/@azesmway/react-native-unity/android/src/main/java/com/azesmwayreactnativeunity/UPlayer.java b/node_modules/@azesmway/react-native-unity/android/src/main/java/com/azesmwayreactnativeunity/UPlayer.java
+index b944779..2b42f1c 100644
+--- a/node_modules/@azesmway/react-native-unity/android/src/main/java/com/azesmwayreactnativeunity/UPlayer.java
++++ b/node_modules/@azesmway/react-native-unity/android/src/main/java/com/azesmwayreactnativeunity/UPlayer.java
+@@ -13,7 +13,8 @@ import java.lang.reflect.Method;
+ public class UPlayer {
+     private static UnityPlayer unityPlayer;
+ 
+-    public UPlayer(final Activity activity, final ReactNativeUnity.UnityPlayerCallback callback) throws ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException {
++    public UPlayer(final Activity activity, final ReactNativeUnity.UnityPlayerCallback callback)
++            throws ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException {
+         super();
+         Class<?> _player = null;
+ 
+@@ -91,13 +92,19 @@ public class UPlayer {
+         }
+     }
+ 
+-    public FrameLayout requestFrame() throws NoSuchMethodException {
++    public FrameLayout requestFrame() {
+         try {
++            // Attempt to invoke getFrameLayout() for the newer UnityPlayer class
+             Method getFrameLayout = unityPlayer.getClass().getMethod("getFrameLayout");
+-
+             return (FrameLayout) getFrameLayout.invoke(unityPlayer);
+         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+-            return unityPlayer;
++            // If it is old UnityPlayer, use isInstance() and cast() to bypass incompatible
++            // type checks when compiling using newer versions of UnityPlayer
++            if (FrameLayout.class.isInstance(unityPlayer)) {
++                return FrameLayout.class.cast(unityPlayer);
++            } else {
++                return null;
++            }
+         }
+     }
+ 
+@@ -106,7 +113,8 @@ public class UPlayer {
+             Method setZ = unityPlayer.getClass().getMethod("setZ");
+ 
+             setZ.invoke(unityPlayer, v);
+-        } catch (NoSuchMethodException e) {}
++        } catch (NoSuchMethodException e) {
++        }
+     }
+ 
+     public Object getContextPlayer() {
