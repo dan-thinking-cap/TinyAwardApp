@@ -13,6 +13,9 @@ import AvailableBagdes from '../screens/Details/AvaiableBadges/AvailableBadges';
 import InfoDetails from '../screens/Details/InfoDetails/InfoDetails';
 import WebLogin from '../screens/Login/WebLogin';
 import LandingScreen from '../screens/Landing';
+import AR from '../screens/AR/AR';
+import Map from '../screens/AR/Map'
+import { GeolocationProvider } from '../context/GeolocationContext';
 const Stack = createNativeStackNavigator();
 const screenOptions: NativeStackNavigationOptions = {
   headerShown: false,
@@ -23,7 +26,7 @@ const screenOptions: NativeStackNavigationOptions = {
 };
 function GuestStack() {
   return (
-    <>
+    <GeolocationProvider>
       <Stack.Navigator
         initialRouteName={screenNames.landingScreen}
         screenOptions={screenOptions}>
@@ -64,8 +67,19 @@ function GuestStack() {
           component={InfoDetails}
           options={screenOptions}
         />
+        <Stack.Screen
+          name={screenNames.AR}
+          component={AR}
+          options={screenOptions}
+        />
+        <Stack.Screen
+          name={screenNames.map}
+          component={Map}
+          options={screenOptions}
+        />
       </Stack.Navigator>
-    </>
+    </GeolocationProvider>
+
   );
 }
 

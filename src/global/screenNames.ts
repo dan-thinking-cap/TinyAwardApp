@@ -8,5 +8,7 @@ export default {
   availableBadges: 'AvailableBadgesScreen',
   infoDetails: 'InfoDetailsScreen',
   webLogin: 'WebLoginScreen',
-  landingScreen: 'LandingScreen'
+  landingScreen: 'LandingScreen',
+  AR: 'ARScreen',
+  map: 'MapScreen'
 };

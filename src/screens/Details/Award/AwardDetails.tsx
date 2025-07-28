@@ -12,6 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Arrow from '../../../assets/icons/arrowForward.svg';
 import Book from '../../../assets/icons/book.svg';
 import BookOpen from '../../../assets/icons/bookReader.svg';
+import SearchIcon from '../../../assets/icons/search.svg'
 import Tick from '../../../assets/icons/check.svg';
 import Lock from '../../../assets/icons/lock.svg';
 import DownWard from '../../../assets/icons/polygon.svg';
@@ -51,6 +52,8 @@ const AwardDetails = () => {
   const [showDetails, setShowDetails] = useState(false);
   const { addOneSpinner, removeOneSpinner } = useSpinners();
   const { userData } = useAppSelector(state => state.user);
+  const [isLocationBased, setIsLocationBased] = useState(false)
+  const [geoLocation, setGeolocation] = useState<{ lat: Number, long: number } | null>(null)
   // let userId = (userData?.id?.length > 2 ? userData?.id : data?.userId) || (data?.userId?.length > 2 ? data?.userId : userData?.id);
   let userId = data?.userId;
   let name = data?.name;
@@ -66,6 +69,7 @@ const AwardDetails = () => {
       ?.replace(/&nbsp;/g, ' ')
       ?.trim();
   }
+
 
   // useEffect(() => {
   //   if (userID === 0) {
@@ -114,17 +118,33 @@ const AwardDetails = () => {
   }
 
   function handleStart() {
-    navigation.push(screenNames.companyPreview, {
-      url: Url,
-      badge: badgeData?.OpenBadgeID,
-      task: taskData?.id,
-      type: taskData?.type,
-      isQuiz: badgeData?.HasQuiz,
-      badgeData,
-      taskData,
-      givenData: data,
-    });
+
+    if (isLocationBased) {
+      //Make a navigation screen for the AR, this should take them right to the AR screen and map screens
+      navigation.push(screenNames.AR, {
+        badge: badgeData?.OpenBadgeID,
+        task: taskData?.id,
+        type: taskData?.type,
+        isQuiz: badgeData?.HasQuiz,
+        badgeData,
+        taskData,
+        givenData: data,
+        destinationCoords: geoLocation
+      });
+    } else {
+      navigation.push(screenNames.companyPreview, {
+        url: Url,
+        badge: badgeData?.OpenBadgeID,
+        task: taskData?.id,
+        type: taskData?.type,
+        isQuiz: badgeData?.HasQuiz,
+        badgeData,
+        taskData,
+        givenData: data,
+      });
+    }
   }
+
   function handleQuiz() {
     // Shuffle function using Fisher-Yates algorithm
 
@@ -184,6 +204,12 @@ const AwardDetails = () => {
     handleFetchCompletedTask(OpenBadgeID);
   }, [data]);
 
+  const parseGeolocation = (geoLocation: string) => {
+    const location = JSON.parse(geoLocation)
+    const { lat, lng: long } = location
+    setGeolocation({ lat, long })
+  }
+
   async function handleFetchDetails() {
     addOneSpinner();
     const request = {
@@ -192,9 +218,13 @@ const AwardDetails = () => {
     };
     try {
       const { response, error } = await getUserDetails(request);
-      console.log(response?.Assessements?.[0]?.QuestionJSON)
-      console.log("------======", response?.Assessements?.[0]?.QuestionJSON?.length)
+      console.log()
 
+      if (typeof (response?.Tasks.pages[0].geoLocation) === 'string') {
+        const { geoLocation } = response.Tasks.pages[0]
+        setIsLocationBased(true)
+        parseGeolocation(geoLocation)
+      }
       removeOneSpinner();
       if (response?.Assessements?.[0]?.QuestionJSON) {
         setAssessement(cleanData(response?.Assessements?.[0]?.QuestionJSON));
@@ -383,19 +413,34 @@ const AwardDetails = () => {
                       badgeData?.HasQuiz ? null : styles.singleButton,
                     ]}
                     onPress={isStart ? handleStart : null}
-                    testID="readButton"
-                    accessibilityLabel="readButton">
+                    testID={isLocationBased ? 'FindButton' : 'readButton'}
+                    accessibilityLabel={isLocationBased ? 'FindButton' : 'readButton'}>
                     <View style={styles.buttonTopWrapper}>
                       <View style={styles.leftWrapper}>
-                        <View testID="bookLogo" accessibilityLabel="bookLogo">
-                          <BookOpen />
-                        </View>
-                        <Text
-                          style={styles.readTxt}
-                          testID="readLabel"
-                          accessibilityLabel="readLabel">
-                          {strings.read}
-                        </Text>
+                        {isLocationBased ?
+                          <>
+                            <View testID="searchLogo" accessibilityLabel="searchLogo">
+                              <SearchIcon />
+                            </View>
+                            <Text
+                              style={styles.readTxt}
+                              testID="searchLabel"
+                              accessibilityLabel="searchLabel">
+                              Find
+                            </Text>
+                          </>
+                          :
+                          <>
+                            <View testID="bookLogo" accessibilityLabel="bookLogo">
+                              <BookOpen />
+                            </View>
+                            <Text
+                              style={styles.readTxt}
+                              testID="readLabel"
+                              accessibilityLabel="readLabel">
+                              {strings.read}
+                            </Text>
+                          </>}
                       </View>
                       {isStart ? (
                         <Text
