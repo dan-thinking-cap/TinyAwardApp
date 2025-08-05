@@ -184,7 +184,7 @@ const AwardDetails = () => {
       questions: questions,
       percentage: passPercentage,
       type: 'quiz',
-      badgeId: badgeData?.OpenBadgeID,
+      badge: badgeData?.OpenBadgeID,
       task: quizID,
       badgeData,
       givenData: data,

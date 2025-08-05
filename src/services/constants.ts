@@ -3,8 +3,8 @@
 export const TIMEOUT = 30000;
 
 // export const BASE_URL = 'https://192.168.0.50/tinyreward/login.aspx';
-//  export const BASE_URL = 'https://tinyaward.com';
-   export const BASE_URL = 'https://stable.tinyaward.com';
+ export const BASE_URL = 'https://tinyaward.com';
+  //  export const BASE_URL = 'https://stable.tinyaward.com';
 
 export const endpoints = {
   userlogin: `${BASE_URL}/TinyReward.ashx`,

@@ -28,9 +28,6 @@ const Map = () => {
         }
     }, [coords]);
 
-    console.log(image)
-
-
     return (
         <View style={{ flex: 1 }}>
             {coords ? (

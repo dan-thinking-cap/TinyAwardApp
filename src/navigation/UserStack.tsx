@@ -16,6 +16,7 @@ import LandingScreen from '../screens/Landing';
 import AR from '../screens/AR/AR';
 import Map from '../screens/AR/Map'
 import { GeolocationProvider } from '../context/GeolocationContext';
+import PermissionRedirect from '../screens/Redirect/PermissionRedirect';
 const Stack = createNativeStackNavigator();
 const screenOptions: NativeStackNavigationOptions = {
   headerShown: false,
@@ -75,6 +76,11 @@ function GuestStack() {
         <Stack.Screen
           name={screenNames.map}
           component={Map}
+          options={screenOptions}
+        />
+        <Stack.Screen
+          name={screenNames.permissionRedirect}
+          component={PermissionRedirect}
           options={screenOptions}
         />
       </Stack.Navigator>

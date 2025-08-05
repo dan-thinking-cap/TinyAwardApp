@@ -1,3 +1,5 @@
+import PermissionRedirect from "../screens/Redirect/PermissionRedirect";
+
 export default {
   dashboard: 'DashboardScreen',
   awardDetails: 'AwardDetails',
@@ -10,5 +12,6 @@ export default {
   webLogin: 'WebLoginScreen',
   landingScreen: 'LandingScreen',
   AR: 'ARScreen',
-  map: 'MapScreen'
+  map: 'MapScreen',
+  permissionRedirect: 'PermissionRedirectScreen'
 };

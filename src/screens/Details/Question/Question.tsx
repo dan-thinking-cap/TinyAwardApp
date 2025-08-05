@@ -45,7 +45,7 @@ const Question = () => {
         percentage,
         type,
         task,
-        badgeId,
+        badge,
         badgeData,
         givenData,
     } = (route?.params as any) || {}
@@ -96,8 +96,8 @@ const Question = () => {
         setHasSubmitted(true)
     }
 
-    async function handleCompletedTask({ userID, task, type, badgeId }: any) {
-        const request = { userID, task, type, 'badge': badgeId };
+    async function handleCompletedTask({ userID, task, type }: any) {
+        const request = { userID, task, type, badge };
         try {
             const { response, error } = await updateTaskStatus(request);
             // console.log(response, error)
@@ -106,7 +106,7 @@ const Question = () => {
                 navigation.replace(screenNames.success, {
                     data: badgeData,
                     userID,
-                    badgeId,
+                    badge,
                 });
             }
         } catch (error) {
@@ -122,7 +122,7 @@ const Question = () => {
 
         if (passed) {
             //Send questions to pass
-            handleCompletedTask({ userID, task, type, badgeId });
+            handleCompletedTask({ userID, task, type, badge });
         } else {
             const result = 'You Failed'
             const resultText = `You did not achieve the passing score of ${percentage}${strings.percentage}`

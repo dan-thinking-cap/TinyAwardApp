@@ -3,7 +3,9 @@ import Geolocation from 'react-native-geolocation-service';
 import { PermissionsAndroid, Platform } from 'react-native';
 import haversine from 'haversine';
 import CompassHeading from 'react-native-compass-heading';
-// import { useKalman } from '../hooks/UseKalman';
+import { useKalman } from '../hooks/useKalman';
+import useNavigation from '../hooks/useNavigation';
+import screenNames from '../global/screenNames';
 
 const gpsFlux = 5;
 const minBoundary = 20;
@@ -42,7 +44,8 @@ export function GeolocationProvider({ children }: { children: ReactNode }) {
   const [headingValue, setHeadingValue] = useState(0);
   const [ready, setReady] = useState(false);
   const headingRef = useRef(0);
-  //   const { filter: smoothHeading } = useKalman({ R: 0.05, Q: 3 });
+  const navigation = useNavigation()
+  const { filter: smoothHeading } = useKalman({ R: 0.05, Q: 3 });
 
   useEffect(() => {
     let watchId: number;
@@ -51,20 +54,30 @@ export function GeolocationProvider({ children }: { children: ReactNode }) {
       const degree_update_rate = 1;
 
       if (Platform.OS === 'android') {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            title: 'Location Permission',
-            message: 'This app needs access to your location.',
-            buttonPositive: 'OK',
-          }
+        const locationAccess = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
         );
 
-        if (granted !== PermissionsAndroid.RESULTS.GRANTED) return;
+        const cameraAccess = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.CAMERA
+        );
+
+        let permissionNames: string[] = []
+        if (locationAccess !== PermissionsAndroid.RESULTS.GRANTED) {
+          permissionNames = [...permissionNames, 'location']
+        };
+
+        if (cameraAccess !== PermissionsAndroid.RESULTS.GRANTED) {
+          permissionNames = [...permissionNames, 'camera']
+        };
+
+        if (locationAccess !== PermissionsAndroid.RESULTS.GRANTED || cameraAccess !== PermissionsAndroid.RESULTS.GRANTED) {
+          navigation.push(screenNames.permissionRedirect, {permissionNames: permissionNames});
+        }
       }
 
       CompassHeading.start(degree_update_rate, ({ heading }: { heading: number; accuracy: number }) => {
-        const newHeading = normalizeHeading(heading, headingRef.current);
+        const newHeading = normalizeHeading(smoothHeading(heading), headingRef.current);
         headingRef.current = newHeading;
         setHeadingValue(newHeading);
       });
@@ -98,6 +111,7 @@ export function GeolocationProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
+
   useEffect(() => {
     if (!coords) return;
     const d = toMeters(coords, destinationCoords);
@@ -123,3 +137,4 @@ function normalizeHeading(current: number, previous: number): number {
   if (delta < -180) delta += 360;
   return previous + delta;
 }
+

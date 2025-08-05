@@ -27,7 +27,7 @@ import LinkedIn from '../../../assets/icons/linkedin.svg';
 import FaceBook from '../../../assets/icons/fb.svg';
 import Twitter from '../../../assets/icons/twitter.svg';
 import {getScaledFont, height, width} from '../../../global/fonts';
-import Sound from 'react-native-sound';
+// import Sound from 'react-native-sound';
 
 const Success = () => {
   const navigation = useNavigation();
@@ -58,35 +58,35 @@ const Success = () => {
     // navigation.push(screenNames.dashboard, {"weburl":`${BASE_URL}/Badges/MyBadges.aspx??badgeid=${badge}`});
   }
 
-  const [sound, setSound] = useState(null);
-  useEffect(() => {
-    Sound.setCategory('Playback'); // Important for iOS
+  // const [sound, setSound] = useState(null);
+  // useEffect(() => {
+  //   Sound.setCategory('Playback'); // Important for iOS
 
-    const newSound = new Sound('awarded.mp3', Sound.MAIN_BUNDLE, (error) => {
-      if (error) {
-        Alert.alert('Error', `Failed to load sound: ${error.message}`);
-        console.log('Sound loading error:', error);
-        return;
-      }
+  //   const newSound = new Sound('awarded.mp3', Sound.MAIN_BUNDLE, (error) => {
+  //     if (error) {
+  //       Alert.alert('Error', `Failed to load sound: ${error.message}`);
+  //       console.log('Sound loading error:', error);
+  //       return;
+  //     }
 
-      newSound.setVolume(1.0); // Set volume
-      newSound.play((success) => {
-        if (!success) {
-          console.log('Playback failed');
-        }
-      });
-      setSound(newSound);
-    });
+  //     newSound.setVolume(1.0); // Set volume
+  //     newSound.play((success) => {
+  //       if (!success) {
+  //         console.log('Playback failed');
+  //       }
+  //     });
+  //     setSound(newSound);
+  //   });
 
-    return () => {
-      if (newSound) {
-        newSound.stop(() => {
-          newSound.release();
-        });
-      }
-    };
+  //   return () => {
+  //     if (newSound) {
+  //       newSound.stop(() => {
+  //         newSound.release();
+  //       });
+  //     }
+  //   };
 
-  }, []);
+  // }, []);
 
 
   return (
