@@ -6,6 +6,7 @@ buildscript {
         targetSdkVersion = 35
         ndkVersion = "27.1.12297006"
         kotlinVersion = "2.1.20"
+        playServicesVersion = "18.2.0" 
     }
     repositories {
         google()
@@ -22,6 +23,7 @@ allprojects {
     configurations.all {
         resolutionStrategy {
             force 'androidx.browser:browser:1.5.0'
+            force 'com.google.android.gms:play-services-location:21.0.1'
         }
     }
     repositories {

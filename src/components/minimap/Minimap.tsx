@@ -4,7 +4,7 @@ import Svg, { Circle, G, Text } from 'react-native-svg';
 import { Camera, MapView, MarkerView, PointAnnotation, StyleURL, UserTrackingMode } from '@maplibre/maplibre-react-native';
 
 const NORTH_RADIUS = 10;
-const SIZE = 220
+const SIZE = 200
 const SPACING = 10
 const RADIUS = (SIZE - SPACING * 2) / 2
 
@@ -21,7 +21,7 @@ const Minimap = ({ heading, badges }: { heading: number, badges: { longitude: nu
                         r={RADIUS}
                         stroke="white"
                         strokeWidth="2"
-                        fill={'rgba(25, 0, 250, 0.15)'}
+                        fill={'rgba(54, 0, 250, 0.4)'}
                     />
                     <Circle
                         cx={SIZE / 2}
@@ -62,7 +62,7 @@ const Minimap = ({ heading, badges }: { heading: number, badges: { longitude: nu
                             return <MarkerView id='location' coordinate={[badge.longitude, badge.latitude]}>
                                 <View style={styles.badgeIcon}>
                                     <View style={styles.badgeCircle}>
-                                        <Image source={{uri: badge.imageUrl}} style={{ width: 16, height: 16, resizeMode: 'contain', transform: [{ rotate: `${heading}deg` }] }} />
+                                        <Image source={{ uri: badge.imageUrl }} style={{ width: 16, height: 16, resizeMode: 'contain', transform: [{ rotate: `${heading}deg` }] }} />
                                     </View>
                                 </View>
                             </MarkerView>
@@ -76,11 +76,6 @@ const Minimap = ({ heading, badges }: { heading: number, badges: { longitude: nu
 
 const styles = StyleSheet.create({
     container: {
-        position: 'absolute',
-        bottom: 30,
-        left: 0,
-        right: 0,
-        backgroundColor: 'transparent',
         alignItems: 'center',
         zIndex: 10,
     },
@@ -90,7 +85,7 @@ const styles = StyleSheet.create({
         top: SPACING,
         width: RADIUS * 2, height: RADIUS * 2,
         borderRadius: SIZE,
-        opacity: 0.9
+        opacity: 0.75,
     },
     badgeIcon: {
         justifyContent: 'center',

@@ -2,7 +2,8 @@ import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, Pressable, Text, TouchableOpacity, Image } from 'react-native';
 import { useGeolocation } from '../../hooks/useGeolocation';
-import { Camera, CameraRef, MapView, MarkerView, PointAnnotation, StyleURL, UserTrackingMode } from '@maplibre/maplibre-react-native';
+import { Camera, CameraRef, /* MapView, */ MarkerView, PointAnnotation, StyleURL, UserTrackingMode } from '@maplibre/maplibre-react-native';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import useNavigation from '../../hooks/useNavigation';
 
 const Map = () => {
@@ -28,50 +29,66 @@ const Map = () => {
         }
     }, [coords]);
 
+    // return (
+    //     <View style={{ flex: 1 }}>
+    //         {coords ? (
+    //             <MapView
+    //                 style={{ flex: 1 }}
+    //                 mapStyle="https://api.maptiler.com/maps/streets/style.json?key=N6mj8EP8JsWcGpACRdsb"
+    //             >
+    //                 {!hasCentered && <Camera
+    //                     ref={cameraRef}
+    //                     maxZoomLevel={19}
+    //                 />}
+    //                 <MarkerView coordinate={[coords.longitude, coords.latitude]}>
+    //                     <View style={styles.markerContainer}>
+    //                         <View style={styles.userCircle}>
+    //                             <Text style={styles.markerText}>👤</Text>
+    //                         </View>
+    //                     </View>
+    //                 </MarkerView>
+    //                 {destination &&
+    //                     <MarkerView id='location' coordinate={[destination.longitude, destination.latitude]}>
+    //                         <View style={styles.badgeIcon}>
+    //                             <View style={styles.badgeCircle}>
+    //                                 <Image source={{uri: image}} style={{ width: 16, height: 16, resizeMode: 'contain' }} />
+    //                             </View>
+    //                         </View>
+    //                     </MarkerView>
+    //                 }
+    //             </MapView>
+    //         ) : (
+    //             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    //                 <Text>Loading your location…</Text>
+    //             </View>
+    //         )}
+    //         <View style={styles.buttonContainer}>
+    //             {/* <Text>Distance: {dist?.toFixed(2)} m</Text>
+    //             <Text>In Range? {inRange?.toString()}</Text>
+    //             <Text>Heading: {heading ?? 0}</Text> */}
+    //             <Pressable
+    //                 style={styles.button}
+    //                 onPress={() => navigation.goBack()}
+    //             >
+    //                 <Text style={styles.buttonText}>Back to AR View</Text>
+    //             </Pressable>
+    //         </View>
+    //     </View>
+    // )
+
     return (
         <View style={{ flex: 1 }}>
-            {coords ? (
-                <MapView
-                    style={{ flex: 1 }}
-                    mapStyle="https://api.maptiler.com/maps/streets/style.json?key=N6mj8EP8JsWcGpACRdsb"
-                >
-                    {!hasCentered && <Camera
-                        ref={cameraRef}
-                        maxZoomLevel={19}
-                    />}
-                    <MarkerView coordinate={[coords.longitude, coords.latitude]}>
-                        <View style={styles.markerContainer}>
-                            <View style={styles.userCircle}>
-                                <Text style={styles.markerText}>👤</Text>
-                            </View>
-                        </View>
-                    </MarkerView>
-                    {destination &&
-                        <MarkerView id='location' coordinate={[destination.longitude, destination.latitude]}>
-                            <View style={styles.badgeIcon}>
-                                <View style={styles.badgeCircle}>
-                                    <Image source={{uri: image}} style={{ width: 16, height: 16, resizeMode: 'contain' }} />
-                                </View>
-                            </View>
-                        </MarkerView>
-                    }
-                </MapView>
-            ) : (
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text>Loading your location…</Text>
-                </View>
-            )}
-            <View style={styles.buttonContainer}>
-                {/* <Text>Distance: {dist?.toFixed(2)} m</Text>
-                <Text>In Range? {inRange?.toString()}</Text>
-                <Text>Heading: {heading ?? 0}</Text> */}
-                <Pressable
-                    style={styles.button}
-                    onPress={() => navigation.goBack()}
-                >
-                    <Text style={styles.buttonText}>Back to AR View</Text>
-                </Pressable>
-            </View>
+            <MapView
+                provider={PROVIDER_GOOGLE}
+                style={StyleSheet.absoluteFillObject}
+                showsUserLocation
+                initialRegion={{
+                    latitude: coords?.latitude ?? 37.78825,
+                    longitude: coords?.longitude ?? -122.4324,
+                    latitudeDelta: 0.01,
+                    longitudeDelta: 0.01,
+                }}
+            />
         </View>
     )
 }

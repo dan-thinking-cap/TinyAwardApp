@@ -66,8 +66,9 @@ react {
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.gms:play-services-base:18.2.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
 
-    
    // Core React Native Android code (0.80.2):
    implementation("com.facebook.react:react-android:0.80.2")
 

@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useRef, useEffect, useState } from 'react';
-import { View, StyleSheet, Pressable, Text } from 'react-native';
+import { View, StyleSheet, Pressable, Text, Image } from 'react-native';
 import UnityView from '@azesmway/react-native-unity/src/UnityView';
 import { useGeolocation } from '../../hooks/useGeolocation';
 import Spinner from '../../components/Spinner';
@@ -10,6 +10,7 @@ import screenNames from '../../global/screenNames';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { setReadStatus } from '../../store/slice/user.slice';
 import { updateTaskStatus } from '../../store/thunk/dashbaord';
+import mapIcon from '../../assets/images/map-icon.png'
 
 // const WORK_LOCATION = {
 //     latitude: 43.650092,
@@ -102,13 +103,21 @@ const AR = () => {
                         androidKeepPlayerMounted={true}
                     />
 
-                    <Minimap heading={heading} badges={[{ ...destinationCoords, imageUrl: badgeData?.Image }]} />
                     <View style={styles.buttonContainer}>
+                        <Minimap heading={heading} badges={[{ ...destinationCoords, imageUrl: badgeData?.Image }]} />
                         <Pressable
                             style={styles.button}
                             onPress={() => navigation.push(screenNames.map, { badge, type, task, isQuiz, badgeData, taskData, givenData })} //Go to Map screen if not opened, and if it is opened then open that screen
                         >
-                            <Text style={styles.buttonText}>Open Map</Text>
+                            {/* <Text style={styles.buttonText}>Open Map</Text> */}
+                            <Image source={mapIcon}
+                                style={{
+                                    width: 24, 
+                                    height: 24,
+                                    resizeMode: 'contain',
+                                    tintColor: 'white', // makes black PNG render as white
+                                }}
+                            />
                         </Pressable>
                     </View>
                 </>
@@ -123,20 +132,20 @@ const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: '#000' },
     buttonContainer: {
         position: 'absolute',
-        bottom: 40,
-        left: 20,
-        right: 20,
+        bottom: 10,
+        left: 10,
+        right: 10,
         flexDirection: 'row',
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end'
     },
     button: {
-        backgroundColor: 'rgba(30, 0, 255, 0.6)',
+        backgroundColor: 'rgba(30, 0, 255, 0.75)',
         borderColor: 'white',
         borderWidth: 2,
-        paddingVertical: 10,
-        paddingHorizontal: 16,
-        borderRadius: 50,
-        zIndex: 30.
+        padding: 12,
+        borderRadius: 10,
+        bottom: 10, //Keep the same as the spacing for the minimap
     },
     buttonText: {
         color: '#fff',
