@@ -10,7 +10,6 @@ const RADIUS = (SIZE - SPACING * 2) / 2
 
 
 const Minimap = ({ heading, badges }: { heading: number, badges: { longitude: number, latitude: number, imageUrl: ImageSourcePropType }[] }) => {
-
     return (
         <View style={{ ...styles.container, transform: [{ rotate: `${-heading}deg` }] }}>
             <Svg height={SIZE} width={SIZE} style={{ zIndex: 2 }}>
