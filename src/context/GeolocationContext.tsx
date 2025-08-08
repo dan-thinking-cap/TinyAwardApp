@@ -11,7 +11,7 @@ const gpsFlux = 5;
 const minBoundary = 20;
 const maxBoundary = minBoundary + gpsFlux;
 
-type Coordinates = { latitude: number; longitude: number };
+export type Coordinates = { latitude: number; longitude: number };
 
 // Renamed interface
 export interface GeolocationContextValue {

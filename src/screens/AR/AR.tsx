@@ -11,6 +11,8 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import { setReadStatus } from '../../store/slice/user.slice';
 import { updateTaskStatus } from '../../store/thunk/dashbaord';
 import mapIcon from '../../assets/images/map-icon.png'
+import BackIcon from '../../assets/icons/backArrow.svg'
+import { UserLocation } from '@maplibre/maplibre-react-native';
 
 // const WORK_LOCATION = {
 //     latitude: 43.650092,
@@ -104,21 +106,27 @@ const AR = () => {
                     />
 
                     <View style={styles.buttonContainer}>
+                        <Pressable
+                            style={styles.button}
+                            onPress={() => navigation.goBack()} //Go to Map screen if not opened, and if it is opened then open that screen
+                        >
+                            <BackIcon width={22} height={22}/>
+                        </Pressable>
                         <Minimap heading={heading} badges={[{ ...destinationCoords, imageUrl: badgeData?.Image }]} />
                         <Pressable
                             style={styles.button}
-                            onPress={() => navigation.push(screenNames.map, { badge, type, task, isQuiz, badgeData, taskData, givenData })} //Go to Map screen if not opened, and if it is opened then open that screen
+                            onPress={() => navigation.push(screenNames.map, { badge, type, task, isQuiz, badgeData, taskData, givenData, destinationCoords })} //Go to Map screen if not opened, and if it is opened then open that screen
                         >
-                            {/* <Text style={styles.buttonText}>Open Map</Text> */}
                             <Image source={mapIcon}
                                 style={{
-                                    width: 24, 
+                                    width: 24,
                                     height: 24,
                                     resizeMode: 'contain',
                                     tintColor: 'white', // makes black PNG render as white
                                 }}
                             />
                         </Pressable>
+
                     </View>
                 </>
                 :
@@ -133,8 +141,8 @@ const styles = StyleSheet.create({
     buttonContainer: {
         position: 'absolute',
         bottom: 10,
-        left: 10,
-        right: 10,
+        left: 20,
+        right: 20,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-end'

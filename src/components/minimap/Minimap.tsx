@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, Image, ImageSourcePropType } from 'react-native';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Svg, { Circle, G, Text } from 'react-native-svg';
-import { Camera, MapView, MarkerView, PointAnnotation, StyleURL, UserTrackingMode } from '@maplibre/maplibre-react-native';
+import { Coordinates } from '../../context/GeolocationContext';
 
 const NORTH_RADIUS = 10;
 const SIZE = 200
@@ -9,7 +10,45 @@ const SPACING = 10
 const RADIUS = (SIZE - SPACING * 2) / 2
 
 
-const Minimap = ({ heading, badges }: { heading: number, badges: { longitude: number, latitude: number, imageUrl: ImageSourcePropType }[] }) => {
+const Minimap = ({ heading, badges, userLocation }: { heading: number, badges: { longitude: number, latitude: number, imageUrl: ImageSourcePropType }[], userLocation: Coordinates }) => {
+    const mapRef = useRef<MapView | null>(null);
+    const [mapReady, setMapReady] = useState(false);
+
+    // Center once when the map is ready and we have a user fix
+    useEffect(() => {
+        if (!mapReady || !userLocation || !mapRef.current) return;
+        mapRef.current.animateCamera(
+            {
+                center: { latitude: userLocation.latitude, longitude: userLocation.longitude },
+                zoom: 18,
+                heading: Number.isFinite(heading) ? heading : 0,
+            },
+            { duration: 400 }
+        );
+    }, [mapReady, userLocation?.latitude, userLocation?.longitude, heading]);
+
+    // Throttle location updates a little to avoid jitter
+    const lastUpdateRef = useRef(0);
+
+    const onUserLocationChange = (e) => {
+        if (!mapRef.current) return;
+        const now = Date.now();
+        if (now - lastUpdateRef.current < 250) return; // throttle 250ms
+
+        const { latitude, longitude, heading: evtHeading } = e.nativeEvent.coordinate || {};
+        if (typeof latitude !== 'number' || typeof longitude !== 'number') return;
+
+        mapRef.current.animateCamera(
+            {
+                center: { latitude, longitude },
+                zoom: 18,
+                heading: Number.isFinite(evtHeading) ? evtHeading : 0,
+            },
+            { duration: 400 }
+        );
+        lastUpdateRef.current = now;
+    };
+
     return (
         <View style={{ ...styles.container, transform: [{ rotate: `${-heading}deg` }] }}>
             <Svg height={SIZE} width={SIZE} style={{ zIndex: 2 }}>
@@ -18,15 +57,9 @@ const Minimap = ({ heading, badges }: { heading: number, badges: { longitude: nu
                         cx={SIZE / 2}
                         cy={SIZE / 2}
                         r={RADIUS}
-                        stroke="white"
+                        stroke='white'
                         strokeWidth="2"
-                        fill={'rgba(54, 0, 250, 0.4)'}
-                    />
-                    <Circle
-                        cx={SIZE / 2}
-                        cy={SIZE / 2}
-                        r="4"
-                        fill="white"
+                        fill={'rgba(54, 0, 250, 0.1)'}
                     />
                     <Circle
                         cx={SIZE / 2}
@@ -48,23 +81,34 @@ const Minimap = ({ heading, badges }: { heading: number, badges: { longitude: nu
             </Svg>
             <View style={styles.mapWrapper}>
                 <MapView
-                    style={{ flex: 1 }}
-                    mapStyle="https://api.maptiler.com/maps/streets/style.json?key=N6mj8EP8JsWcGpACRdsb"
+                    ref={mapRef}
+                    provider={PROVIDER_GOOGLE}
+                    style={StyleSheet.absoluteFillObject}
+                    showsUserLocation={true}                    // <-- required for onUserLocationChange
+                    showsMyLocationButton={false}
+                    showsBuildings={true}
+                    initialRegion={{
+                        latitude: userLocation?.latitude ?? 37.33,
+                        longitude: userLocation?.longitude ?? -122,
+                        latitudeDelta: 0.0001,
+                        longitudeDelta: 0.0001,
+                    }}
+                    onMapReady={() => setMapReady(true)}
+                    onUserLocationChange={onUserLocationChange} // <-- follow via map's location feed
                 >
-                    <Camera
-                        followUserLocation={true}
-                        followUserMode={UserTrackingMode.Follow}
-                        followZoomLevel={17}
-                    />
                     {
-                        badges.map(badge => {
-                            return <MarkerView id='location' coordinate={[badge.longitude, badge.latitude]}>
+                        badges.map((badge, i) => {
+                            return <Marker
+                                identifier="badgeLocation"
+                                key={`badge-${i}`}
+                                coordinate={{ latitude: badge.latitude, longitude: badge.longitude }}
+                            >
                                 <View style={styles.badgeIcon}>
                                     <View style={styles.badgeCircle}>
                                         <Image source={{ uri: badge.imageUrl }} style={{ width: 16, height: 16, resizeMode: 'contain', transform: [{ rotate: `${heading}deg` }] }} />
                                     </View>
                                 </View>
-                            </MarkerView>
+                            </Marker>
                         })
                     }
                 </MapView>
@@ -106,3 +150,4 @@ const styles = StyleSheet.create({
 });
 
 export default Minimap
+
