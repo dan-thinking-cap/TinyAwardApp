@@ -12,18 +12,14 @@ import { setReadStatus } from '../../store/slice/user.slice';
 import { updateTaskStatus } from '../../store/thunk/dashbaord';
 import mapIcon from '../../assets/images/map-icon.png'
 import BackIcon from '../../assets/icons/backArrow.svg'
-import { UserLocation } from '@maplibre/maplibre-react-native';
-
-// const WORK_LOCATION = {
-//     latitude: 43.650092,
-//     longitude: -79.364404,
-// };
 
 const AR = () => {
     const route = useRoute();
     const dispatch = useAppDispatch()
     const navigation = useNavigation();
     const unityRef = useRef<UnityView>(null);
+    const [keepViewMounted, setKeepViewMounted] = useState(false)
+    // const [paused, setPaused] = useState(false)
     const { userID } = useAppSelector(state => state.user)
     const { badge, type, task, isQuiz, badgeData, taskData, givenData, destinationCoords: destCoords } =
         (route?.params as any) || {};
@@ -37,7 +33,6 @@ const AR = () => {
         ready,
     } = useGeolocation();
     useEffect(() => {
-        // const { latitude, longitude } = WORK_LOCATION
         const { lat: latitude, long: longitude } = destCoords
         setDestinationCoords({ latitude, longitude });
     }, [destCoords, setDestinationCoords]);
@@ -78,7 +73,18 @@ const AR = () => {
         }
     }
 
-    // console.log(route?.params)
+    const handleBack = () => {
+        // if (paused){
+        //     unityRef.current?.pauseUnity(true)
+        // } else {
+        //     unityRef.current?.resumeUnity()
+        // }
+        // setPaused(prev => !prev)
+        // // unityRef.current?.unloadUnity()
+        // setKeepViewMounted(false)
+        //Combine this with useFocusEffect to make the screen pause and unpause when it isn't in view
+        navigation.goBack()
+    }
 
     useEffect(() => {
         sendToUnity('Canvas', 'OnMessage', { distance: Number(distance.toFixed(2)), inRange, userLocation: coords, destination: destinationCoords, heading })
@@ -87,12 +93,12 @@ const AR = () => {
 
     useEffect(() => {
         if (ready && badgeData) {
+            if (!keepViewMounted) setKeepViewMounted(true)
             sendToUnity('XR Origin', 'OnReceiveBadgeData', { name: badgeData?.BadgeName, imageUrl: badgeData?.Image, hasQuiz: isQuiz })
         }
     }, [ready, badgeData])
 
-    // console.log(badge, type, task, isQuiz, badgeData, taskData, givenData, /* destCoords */)
-    // console.log(coords, WORK_LOCATION)
+
 
     return (
         <View style={styles.container}>
@@ -102,13 +108,13 @@ const AR = () => {
                         ref={unityRef}
                         style={StyleSheet.absoluteFill}
                         onUnityMessage={evt => handleUnityMessage(evt)}
-                        androidKeepPlayerMounted={true}
+                        androidKeepPlayerMounted={keepViewMounted}
                     />
 
                     <View style={styles.buttonContainer}>
                         <Pressable
                             style={styles.button}
-                            onPress={() => navigation.goBack()} //Go to Map screen if not opened, and if it is opened then open that screen
+                            onPress={handleBack} //Go to Map screen if not opened, and if it is opened then open that screen
                         >
                             <BackIcon width={22} height={22}/>
                         </Pressable>

@@ -4,7 +4,6 @@ import { View, StyleSheet, Pressable, Text, TouchableOpacity, Image, Interaction
 import { useGeolocation } from '../../hooks/useGeolocation';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import useNavigation from '../../hooks/useNavigation';
-import { Callout } from '@maplibre/maplibre-react-native';
 import CameraSvg from '../../assets/icons/camera.svg';
 
 const Map = () => {
