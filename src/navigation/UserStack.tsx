@@ -85,7 +85,6 @@ function GuestStack() {
         />
       </Stack.Navigator>
     </GeolocationProvider>
-
   );
 }
 

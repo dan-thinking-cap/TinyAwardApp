@@ -1,13 +1,14 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, Pressable, Text, TouchableOpacity, Image } from 'react-native';
+import { View, StyleSheet, Pressable, Text, TouchableOpacity, Image, InteractionManager } from 'react-native';
 import { useGeolocation } from '../../hooks/useGeolocation';
 // import { Camera, CameraRef, /* MapView, */ MarkerView, PointAnnotation, StyleURL, UserTrackingMode } from '@maplibre/maplibre-react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import useNavigation from '../../hooks/useNavigation';
-import MapMarker from 'react-native-maps/src/MapMarker';
 
 const Map = () => {
+    const mapRef = useRef<MapView | null>(null);
+    const [mapReady, setMapReady] = useState(false);
     // const route = useRoute();
     // const navigation = useNavigation()
     // const { coords: userLocation, distance: dist, inRange, destinationCoords: destination, heading } = useGeolocation()
@@ -16,61 +17,82 @@ const Map = () => {
     // const image = badgeData?.Image
     // const cameraRef = useRef<CameraRef>(null);
 
-    // const mapRef = useRef(null)
-    // const [hasCentered, setHasCentered] = useState(false);
-
-    // console.log(userLocation)
 
     // useEffect(() => {
-    //     if (userLocation && mapRef.current && !hasCentered) {
-    //         mapRef.current.animateToRegion({
-    //             latitude: userLocation.latitude,
-    //             longitude: userLocation.longitude,
+    //     const timer = setTimeout(() => {
+    //         setIsReady(true);
+    //     }, 100);
+
+    //     return () => clearTimeout(timer); // Clean up the timeout on unmount
+    // }, []);
+
+    // useEffect(() => {
+    //     if (mapRef?.current) {
+    //         mapRef?.current.animateToRegion({
+    //             latitude: 37.33,
+    //             longitude: -122,
     //             latitudeDelta: 0.01,
     //             longitudeDelta: 0.01,
     //         }, 1000);
-    //         setHasCentered(true);
     //     }
-    // }, [userLocation]);
+    // })
+
+    const target = {
+        latitude: 37.33,
+        longitude: -122,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+    };
+
+    // useEffect(() => {
+    //     if (!mapReady) return;
+
+    //     // Push the camera call to the end of the frame so markers/tiles are mounted
+    //     const task = InteractionManager.runAfterInteractions(() => {
+    //         requestAnimationFrame(() => {
+    //             mapRef.current?.animateToRegion(target, 800);
+    //         });
+    //     });
+
+    //     return () => task?.cancel?.();
+    // }, [mapReady]);
+
 
     return (
         <View style={{ flex: 1 }}>
             <MapView
-                // ref={mapRef}
-                provider={PROVIDER_GOOGLE}
+                ref={mapRef}
+                key={"map"}
+                // provider={PROVIDER_GOOGLE}
                 style={StyleSheet.absoluteFillObject}
-                // showsBuildings={false}
-            // showsUserLocation
-            // initialRegion={{
-            //     latitude: 37.33,  // Times Square
-            //     longitude: -122,
-            //     latitudeDelta: 2,
-            //     longitudeDelta: 2,
-            // }}
+                // Start wider; we’ll zoom in after the map is ready
+                region={{
+                    latitude: target.latitude,
+                    longitude: target.longitude,
+                    latitudeDelta: 2,
+                    longitudeDelta: 2,
+                }}
+                showsCompass={true}
+                // showsUserLocation={true}
+                // onMapReady={() => setMapReady(true)}      // fires when native map is initialized
+            // onMapLoaded={() => setMapReady(true)}  // alternative: when tiles & labels are drawn
             >
+                {/* Optional: add a marker; camera will still run AFTER it mounts */}
+                {/* <Marker coordinate={target} title="Target" tracksViewChanges={false} /> */}
                 <Marker
-                    key={'marker'}
-                    coordinate={{ latitude: 0, longitude: 0 }}
-                    title={'Title'}
+                    identifier="user"
+                    coordinate={{
+                        latitude: 37.33,
+                        longitude: -122,
+                    }}
+                    title="User"
+                // If you use custom images, stop continuous redraw:
+                // onLoad={() => setMarkersReady(true)}
+                // tracksViewChanges={false}
                 />
-                {/* <MapMarker
-                    coordinate={{
-                        latitude: 40.7580,
-                        longitude: -73.9855
-                    }}
-                    title="You are here"
-                    pinColor="blue"
-                /> */}
-                {/* <Marker
-                    coordinate={{
-                        latitude: 48.8584,
-                        longitude: 2.2945
-                    }}
-                    title={'Target'}
-                /> */}
             </MapView>
         </View>
-    )
+    );
 }
 
 export default Map
