@@ -1,19 +1,18 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {FlatList, Pressable, Text, TextInput, View} from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { FlatList, Image, Pressable, Text, TextInput, View } from 'react-native';
 import Clear from '../../../assets/icons/clear.svg';
 import Icon from '../../../assets/icons/search.svg';
 import Verified from '../../../assets/icons/verfiedLogo.svg';
-import FastImages from '../../../components/FastImage/FastImages';
 import PrimaryGradientButton from '../../../components/GradientButton/PrimaryGradientButton';
 import SampleTestData from '../../../components/SampleTestData';
 import colors from '../../../global/colors';
-import {height, width} from '../../../global/fonts';
+import { height, width } from '../../../global/fonts';
 import screenNames from '../../../global/screenNames';
 import strings from '../../../global/strings';
 import useNavigation from '../../../hooks/useNavigation';
 import useSpinners from '../../../hooks/useSpinners';
-import {getAwardList} from '../../../store/thunk/dashbaord';
-import {styles} from './Styles';
+import { getAwardList } from '../../../store/thunk/dashbaord';
+import { styles } from './Styles';
 
 const AwardCard = () => {
   const navigation = useNavigation();
@@ -25,10 +24,10 @@ const AwardCard = () => {
   const [count, setCount] = useState(1);
   const [totalPages, setTotalpages] = useState<number>(1);
   const [isSearch, setIsSearch] = useState(false);
-  const {addOneSpinner, removeOneSpinner} = useSpinners();
+  const { addOneSpinner, removeOneSpinner } = useSpinners();
   const [show, setShow] = useState(false);
-  const searchRef = useRef<TextInput>();
-  const listRef = useRef<any>();
+  const searchRef = useRef<TextInput>(null);
+  const listRef = useRef<any>(null);
 
   useEffect(() => {
     handleSearch(search, page);
@@ -53,7 +52,7 @@ const AwardCard = () => {
       page: pageNumber,
     };
     try {
-      const {response, error} = await getAwardList(request);
+      const { response, error } = await getAwardList(request);
       if (response?.Badges) {
         setTotalpages(response?.TotalBadges);
         setCount(prev => prev + response?.Badges?.length);
@@ -72,7 +71,7 @@ const AwardCard = () => {
       setPage(prevPage => prevPage + 1);
     }
   };
-  const renderItem = ({item, index}) => {
+  const renderItem = ({ item, index }) => {
     function handleExtension() {
       navigation.navigate(screenNames.awardDetails, {
         data: item,
@@ -80,7 +79,7 @@ const AwardCard = () => {
       });
     }
     function handleInfo() {
-      navigation.navigate(screenNames.infoDetails, {data: item});
+      navigation.navigate(screenNames.infoDetails, { data: item });
     }
     return (
       <View
@@ -101,8 +100,8 @@ const AwardCard = () => {
         </View>
         <View>
           <View style={styles.imageWrapper}>
-            <FastImages
-              source={{uri: item?.Image}}
+            <Image
+              source={{ uri: item?.Image }}
               style={styles.imageLogo}
               testID="awardLogo"
               accessibilityLabel="awardLogo"
@@ -199,14 +198,14 @@ const AwardCard = () => {
   }
   function handleSearchData() {
     if (search) {
-      listRef?.current?.scrollToOffset({offset: 0, animated: true});
+      listRef?.current?.scrollToOffset({ offset: 0, animated: true });
       setIsSearch(true);
       resetPages();
       handleSearch(search, page);
     }
   }
   function clearSearch() {
-    listRef?.current?.scrollToOffset({offset: 0, animated: true});
+    listRef?.current?.scrollToOffset({ offset: 0, animated: true });
     setSearch('');
     resetPages();
     handleSearch('', page);

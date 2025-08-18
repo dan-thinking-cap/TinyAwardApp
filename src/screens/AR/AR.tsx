@@ -47,7 +47,7 @@ const AR = () => {
         console.log('Unity → RN: ', message);
         if (message === "Badge Completed") {
             handleCompletedTask({ userID, task, type, badge })
-            unityRef.current?.unloadUnity()
+            // unityRef.current?.unloadUnity()
         }
     }
 
@@ -110,13 +110,12 @@ const AR = () => {
                         onUnityMessage={evt => handleUnityMessage(evt)}
                         androidKeepPlayerMounted={keepViewMounted}
                     />
-
                     <View style={styles.buttonContainer}>
                         <Pressable
                             style={styles.button}
                             onPress={handleBack} //Go to Map screen if not opened, and if it is opened then open that screen
                         >
-                            <BackIcon width={22} height={22}/>
+                            <BackIcon width={22} height={22} />
                         </Pressable>
                         <Minimap heading={heading} badges={[{ ...destinationCoords, imageUrl: badgeData?.Image }]} />
                         <Pressable
@@ -143,7 +142,7 @@ const AR = () => {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#000' },
+    container: { flex: 1 },
     buttonContainer: {
         position: 'absolute',
         bottom: 10,

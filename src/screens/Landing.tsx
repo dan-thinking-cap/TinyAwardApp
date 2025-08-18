@@ -3,11 +3,9 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import useNavigation from '../hooks/useNavigation';
 import screenNames from '../global/screenNames';
 import colors from '../global/colors';
-import PrimaryGradientButton from '../components/GradientButton/PrimaryGradientButton';
 import { getScaledFont, height, width } from '../global/fonts';
 import { fonts } from '../assets';
 import Tiny from '../assets/icons/tinyAwardsLogoCollapsed.svg'
-import Svg from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
 
 
@@ -20,23 +18,17 @@ const LandingScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Svg viewBox="-5 0 50 50" width={200} height={200}>
-                <Tiny />
-            </Svg>
+            <Tiny
+                width={175}
+                height={175}
+                style={{ marginBottom: 20 }}
+            />
             <Text style={styles.welcomeText}>
                 Welcome to the Tiny Award app!
             </Text>
             <Text style={styles.descriptionText}>
                 This is a companion app to the Tiny Award website that will allow you to earn badges via your mobile device. Your journey starts at the site and you can follow this link to begin discovering badges.
             </Text>
-            {/* <PrimaryGradientButton
-                title={'Continue To Site'}
-                style={styles.siteBtn}
-                textStyle={styles.siteBtnTxt}
-                textId={'Continue To Site'}
-                titleId={'continueToSite'}
-                onPress={handlePress}
-            /> */}
             <Pressable style={styles.siteBtn} id={'Continue To Site'} onPress={handlePress}>
                 <LinearGradient colors={['#f3bc16', '#f77c1e']} style={styles.siteBtn}>
                     <View style={{

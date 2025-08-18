@@ -6,7 +6,14 @@ require Pod::Executable.execute_command('node', ['-p',
   )', __dir__]).strip
 
 platform :ios, min_ios_version_supported
+ENV['RCT_NEW_ARCH_ENABLED'] = '0'   # keep off while finishing Unity wiring
 prepare_react_native_project!
+
+rn_maps_path = '../node_modules/react-native-maps'
+pod 'react-native-maps', :path => rn_maps_path
+pod 'react-native-google-maps', :path => rn_maps_path
+pod 'GoogleMaps'
+pod 'Google-Maps-iOS-Utils'
 
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil

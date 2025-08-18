@@ -1,6 +1,6 @@
-import {useRoute} from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   Image,
@@ -19,21 +19,20 @@ import colors from '../../../global/colors';
 import screenNames from '../../../global/screenNames';
 import strings from '../../../global/strings';
 import useNavigation from '../../../hooks/useNavigation';
-import {styles} from './Styles';
-import {useAppSelector} from '../../../store';
-import {updateBakeStatus} from '../../../store/thunk/dashbaord';
-import {BASE_URL} from '../../../services/constants';
+import { styles } from './Styles';
+import { useAppSelector } from '../../../store';
+import { updateBakeStatus } from '../../../store/thunk/dashbaord';
+import { BASE_URL } from '../../../services/constants';
 import LinkedIn from '../../../assets/icons/linkedin.svg';
 import FaceBook from '../../../assets/icons/fb.svg';
 import Twitter from '../../../assets/icons/twitter.svg';
-import {getScaledFont, height, width} from '../../../global/fonts';
-// import Sound from 'react-native-sound';
+import { getScaledFont, height, width } from '../../../global/fonts';
 
 const Success = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const {data, userID, badge} = (route.params as any) || {};
-  const {userName} = useAppSelector(state => state.user);
+  const { data, userID, badge } = (route.params as any) || {};
+  const { userName } = useAppSelector(state => state.user);
 
   console.log('========', userName);
   useEffect(() => {
@@ -41,13 +40,13 @@ const Success = () => {
   }, []);
 
   async function handleBakeTask() {
-    const request = {userID, badge};
+    const request = { userID, badge };
     try {
-      const {response, error} = await updateBakeStatus(request);
-    } catch (error) {}
+      const { response, error } = await updateBakeStatus(request);
+    } catch (error) { }
   }
   function goBackscreen() {
-    navigation.push(screenNames.webLogin, {isLogin: true});
+    navigation.push(screenNames.webLogin, { isLogin: true });
   }
   function handleBack() {
     // console.log("jjjjjjjj",`${BASE_URL}/Badges/MyBadges.aspx?badgeid=${badge}&tab_id=${123}`)
@@ -58,43 +57,12 @@ const Success = () => {
     // navigation.push(screenNames.dashboard, {"weburl":`${BASE_URL}/Badges/MyBadges.aspx??badgeid=${badge}`});
   }
 
-  // const [sound, setSound] = useState(null);
-  // useEffect(() => {
-  //   Sound.setCategory('Playback'); // Important for iOS
-
-  //   const newSound = new Sound('awarded.mp3', Sound.MAIN_BUNDLE, (error) => {
-  //     if (error) {
-  //       Alert.alert('Error', `Failed to load sound: ${error.message}`);
-  //       console.log('Sound loading error:', error);
-  //       return;
-  //     }
-
-  //     newSound.setVolume(1.0); // Set volume
-  //     newSound.play((success) => {
-  //       if (!success) {
-  //         console.log('Playback failed');
-  //       }
-  //     });
-  //     setSound(newSound);
-  //   });
-
-  //   return () => {
-  //     if (newSound) {
-  //       newSound.stop(() => {
-  //         newSound.release();
-  //       });
-  //     }
-  //   };
-
-  // }, []);
-
-
   return (
     <SafeAreaView style={styles.safeWrapper}>
       <LinearGradient
         colors={[colors.linerBlueGradientOne, colors.linerBlueGradientTwo]}
         style={styles.container}>
-          
+
         <View style={styles.topContainer}>
           <View>
             <View style={styles.headerWrapper}>
@@ -130,7 +98,7 @@ const Success = () => {
             <View style={styles.imageContainer}>
 
               <Image
-                source={{uri: data?.Image}}
+                source={{ uri: data?.Image }}
                 style={styles.imageLogo}
                 testID="awardLogo"
                 accessibilityLabel="awardLogo"
@@ -168,7 +136,7 @@ const Success = () => {
               source={require('../../../components/lottiePlayer/fireCracker.json')}
               autoPlay
               loop
-              style={{flex: 1}}
+              style={{ flex: 1 }}
             />
             <View style={styles.detailBtnWrapper}>
               <PrimaryGradientButton
@@ -177,7 +145,7 @@ const Success = () => {
                 textStyle={styles.detailsTxt}
                 textId={'portfolio'}
                 titleId={'portfolioTxt'}
-                 onPress={handleBack}
+                onPress={handleBack}
               />
               <View style={styles.socialButton}>
                 <Pressable
@@ -202,12 +170,13 @@ const Success = () => {
                   />
                 </Pressable>
                 <Pressable
-                  onPress={()=>{
-                    
-                    console.log("hhhhhhhhhhh",`${BASE_URL}/ShareBadge.aspx?UserID=${userID}BadgeID=${badge}&title=Check+out+My+Recent+Badge`)
-                  let urlis =  encodeURIComponent(`${BASE_URL}//ShareBadge.aspx?UserID=${userID}&BadgeID=${badge}&title=Check+out+My+Recent+Badge`)
-                  console.log("=========",`https://www.linkedin.com/shareArticle?mini=true&url=${urlis}`)
-                    Linking.openURL(`https://www.linkedin.com/shareArticle?mini=true&url=${urlis}`)}}>
+                  onPress={() => {
+
+                    console.log("hhhhhhhhhhh", `${BASE_URL}/ShareBadge.aspx?UserID=${userID}BadgeID=${badge}&title=Check+out+My+Recent+Badge`)
+                    let urlis = encodeURIComponent(`${BASE_URL}//ShareBadge.aspx?UserID=${userID}&BadgeID=${badge}&title=Check+out+My+Recent+Badge`)
+                    console.log("=========", `https://www.linkedin.com/shareArticle?mini=true&url=${urlis}`)
+                    Linking.openURL(`https://www.linkedin.com/shareArticle?mini=true&url=${urlis}`)
+                  }}>
                   <LinkedIn
                     height={getScaledFont(60)}
                     width={getScaledFont(60)}

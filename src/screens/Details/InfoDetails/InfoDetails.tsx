@@ -1,5 +1,5 @@
-import {useFocusEffect, useRoute} from '@react-navigation/native';
-import React, {useCallback, useState} from 'react';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
+import React, { useCallback, useState } from 'react';
 import {
   Image,
   Pressable,
@@ -14,17 +14,16 @@ import Arrow from '../../../assets/icons/arrowForward.svg';
 import colors from '../../../global/colors';
 import strings from '../../../global/strings';
 import useNavigation from '../../../hooks/useNavigation';
-import {getInfoData} from '../../../store/thunk/dashbaord';
+import { getInfoData } from '../../../store/thunk/dashbaord';
 import ListInfo from './ListInfo';
-import {styles} from './Styles';
-import FastImages from '../../../components/FastImage/FastImages';
+import { styles } from './Styles';
 import screenNames from '../../../global/screenNames';
 export const IMAGE_BASE_jpg = 'https://tinyaward.b-cdn.net/users/';
 export const IMAGE_BASE_png = 'https://tinyaward.b-cdn.net/issuers/';
 const InfoDetails = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const {data} = (route.params as any) || {};
+  const { data } = (route.params as any) || {};
   const [badgeData, setBadgeData] = useState<any>([]);
   const [tags, setTags] = useState<any>();
   function handleHtmlTxt(html: any) {
@@ -43,13 +42,13 @@ const InfoDetails = () => {
   );
   async function handleFetchDetails() {
     try {
-      const {response, error} = await getInfoData(data?.OpenBadgeID);
+      const { response, error } = await getInfoData(data?.OpenBadgeID);
       setBadgeData(response?.Badge?.[0]);
       const tagsArray = response?.Badge?.[0]?.Tags?.split(',');
       if (response?.Badge?.[0]?.Tags) {
         setTags(tagsArray);
       }
-    } catch (error) {}
+    } catch (error) { }
   }
   function cleanData(input: any) {
     try {
@@ -119,8 +118,8 @@ const InfoDetails = () => {
       </View>
       <LinearGradient
         colors={[colors.linerBlueGradientTwo, colors.linerBlueGradientOne]}
-        start={{x: 1.7, y: 0.4}}
-        end={{x: 0.5, y: 0.6}}
+        start={{ x: 1.7, y: 0.4 }}
+        end={{ x: 0.5, y: 0.6 }}
         style={styles.container}>
         <View>
           <ScrollView
@@ -133,7 +132,7 @@ const InfoDetails = () => {
                 testID="awardLogo"
                 accessibilityLabel="awardLogo">
                 <Image
-                  source={{uri: badgeData?.Image}}
+                  source={{ uri: badgeData?.Image }}
                   style={styles.imageWrapper}
                 />
               </View>
@@ -238,7 +237,7 @@ const InfoDetails = () => {
                   </Text>
                 </View>
                 <View style={styles.issuerWrapper}>
-                  <FastImages
+                  <Image
                     source={{
                       uri: handleImage(badgeData?.IssuerImage),
                     }}

@@ -87,6 +87,7 @@ const Minimap = ({ heading, badges, userLocation }: { heading: number, badges: {
                     showsUserLocation={true}                    // <-- required for onUserLocationChange
                     showsMyLocationButton={false}
                     showsBuildings={true}
+                    rotateEnabled={false}
                     initialRegion={{
                         latitude: userLocation?.latitude ?? 37.33,
                         longitude: userLocation?.longitude ?? -122,
