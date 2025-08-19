@@ -48,14 +48,12 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Used for AR camera rendering.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Tiny Award uses your location to determine your current coordinates and measure your distance from badge locations you are tracking, so we can guide you to them accurately.</string>
-	<!-- Required if your app requests “Always” or has background location modes enabled -->
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Tiny Award uses your location even when the app is not open to continue guiding you to nearby badge locations.</string>
-	<!-- Older iOS fallback (still recommended for App Store validation compatibility) -->
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Tiny Award uses your location even when the app is not open to continue guiding you to nearby badge locations.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Tiny Award uses your location to determine your current coordinates and measure your distance from badge locations you are tracking, so we can guide you to them accurately.</string>
 	<key>RCTNewArchEnabled</key>
 	<false/>
 	<key>UILaunchStoryboardName</key>

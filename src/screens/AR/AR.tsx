@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useRef, useEffect, useState } from 'react';
-import { View, StyleSheet, Pressable, Text, Image } from 'react-native';
+import { View, StyleSheet, Pressable, Text, Image, Animated } from 'react-native';
 import UnityView from '@azesmway/react-native-unity/src/UnityView';
 import { useGeolocation } from '../../hooks/useGeolocation';
 import Spinner from '../../components/Spinner';
@@ -18,8 +18,10 @@ const AR = () => {
     const dispatch = useAppDispatch()
     const navigation = useNavigation();
     const unityRef = useRef<UnityView>(null);
+    const [unityReady, setUnityReady] = useState(false);
     const [keepViewMounted, setKeepViewMounted] = useState(false)
     // const [paused, setPaused] = useState(false)
+    const [fadeAnim] = useState(new Animated.Value(0));
     const { userID } = useAppSelector(state => state.user)
     const { badge, type, task, isQuiz, badgeData, taskData, givenData, destinationCoords: destCoords } =
         (route?.params as any) || {};
@@ -42,9 +44,16 @@ const AR = () => {
         unityRef.current?.postMessage(gameObject, method, JSON.stringify(payload));
     };
 
+
     const handleUnityMessage = (evt) => {
         const message = evt.nativeEvent.message
         console.log('Unity → RN: ', message);
+
+        if (message === 'READY') {
+            setUnityReady(true);
+            return;
+        }
+
         if (message === "Badge Completed") {
             handleCompletedTask({ userID, task, type, badge })
             // unityRef.current?.unloadUnity()
@@ -98,7 +107,15 @@ const AR = () => {
         }
     }, [ready, badgeData])
 
-
+    useEffect(() => {
+        if (unityReady) {
+            Animated.timing(fadeAnim, {
+                toValue: 1,
+                duration: 100,        // animation time (ms)
+                useNativeDriver: true // GPU-accelerated
+            }).start();
+        }
+    }, [unityReady]);
 
     return (
         <View style={styles.container}>
@@ -110,29 +127,32 @@ const AR = () => {
                         onUnityMessage={evt => handleUnityMessage(evt)}
                         androidKeepPlayerMounted={keepViewMounted}
                     />
-                    <View style={styles.buttonContainer}>
-                        <Pressable
-                            style={styles.button}
-                            onPress={handleBack} //Go to Map screen if not opened, and if it is opened then open that screen
-                        >
-                            <BackIcon width={22} height={22} />
-                        </Pressable>
-                        <Minimap heading={heading} badges={[{ ...destinationCoords, imageUrl: badgeData?.Image }]} />
-                        <Pressable
-                            style={styles.button}
-                            onPress={() => navigation.push(screenNames.map, { badge, type, task, isQuiz, badgeData, taskData, givenData, destinationCoords })} //Go to Map screen if not opened, and if it is opened then open that screen
-                        >
-                            <Image source={mapIcon}
-                                style={{
-                                    width: 24,
-                                    height: 24,
-                                    resizeMode: 'contain',
-                                    tintColor: 'white', // makes black PNG render as white
-                                }}
-                            />
-                        </Pressable>
+                    {unityReady && (
+                        <Animated.View style={[StyleSheet.absoluteFill, { opacity: fadeAnim }]}>
+                            <View style={styles.buttonContainer}>
+                                <Pressable
+                                    style={styles.button}
+                                    onPress={handleBack} //Go to Map screen if not opened, and if it is opened then open that screen
+                                >
+                                    <BackIcon width={22} height={22} />
+                                </Pressable>
+                                <Minimap heading={heading} badges={[{ ...destinationCoords, imageUrl: badgeData?.Image }]} />
+                                <Pressable
+                                    style={styles.button}
+                                    onPress={() => navigation.push(screenNames.map, { badge, type, task, isQuiz, badgeData, taskData, givenData, destinationCoords })} //Go to Map screen if not opened, and if it is opened then open that screen
+                                >
+                                    <Image source={mapIcon}
+                                        style={{
+                                            width: 24,
+                                            height: 24,
+                                            resizeMode: 'contain',
+                                            tintColor: 'white', // makes black PNG render as white
+                                        }}
+                                    />
+                                </Pressable>
 
-                    </View>
+                            </View>
+                        </Animated.View>)}
                 </>
                 :
                 <Spinner />
