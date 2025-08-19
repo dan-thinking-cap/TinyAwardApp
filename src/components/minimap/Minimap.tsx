@@ -21,7 +21,7 @@ const Minimap = ({ heading, badges, userLocation }: { heading: number, badges: {
             {
                 center: { latitude: userLocation.latitude, longitude: userLocation.longitude },
                 zoom: 18,
-                heading: Number.isFinite(heading) ? heading : 0,
+                heading: 0,
             },
             { duration: 400 }
         );
@@ -35,14 +35,14 @@ const Minimap = ({ heading, badges, userLocation }: { heading: number, badges: {
         const now = Date.now();
         if (now - lastUpdateRef.current < 250) return; // throttle 250ms
 
-        const { latitude, longitude, heading: evtHeading } = e.nativeEvent.coordinate || {};
+        const { latitude, longitude } = e.nativeEvent.coordinate || {};
         if (typeof latitude !== 'number' || typeof longitude !== 'number') return;
 
         mapRef.current.animateCamera(
             {
                 center: { latitude, longitude },
                 zoom: 18,
-                heading: Number.isFinite(evtHeading) ? evtHeading : 0,
+                heading: 0, //Lock North to up position
             },
             { duration: 400 }
         );
