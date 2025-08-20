@@ -128,30 +128,27 @@ const AR = () => {
                         androidKeepPlayerMounted={keepViewMounted}
                     />
                     {unityReady && (
-                        <Animated.View style={[StyleSheet.absoluteFill, { opacity: fadeAnim }]}>
-                            <View style={styles.buttonContainer}>
-                                <Pressable
-                                    style={styles.button}
-                                    onPress={handleBack} //Go to Map screen if not opened, and if it is opened then open that screen
-                                >
-                                    <BackIcon width={22} height={22} />
-                                </Pressable>
-                                <Minimap heading={heading} badges={[{ ...destinationCoords, imageUrl: badgeData?.Image }]} />
-                                <Pressable
-                                    style={styles.button}
-                                    onPress={() => navigation.push(screenNames.map, { badge, type, task, isQuiz, badgeData, taskData, givenData, destinationCoords })} //Go to Map screen if not opened, and if it is opened then open that screen
-                                >
-                                    <Image source={mapIcon}
-                                        style={{
-                                            width: 24,
-                                            height: 24,
-                                            resizeMode: 'contain',
-                                            tintColor: 'white', // makes black PNG render as white
-                                        }}
-                                    />
-                                </Pressable>
-
-                            </View>
+                        <Animated.View style={[styles.buttonContainer, { opacity: fadeAnim }]}>
+                            <Pressable
+                                style={styles.button}
+                                onPress={handleBack} //Go to Map screen if not opened, and if it is opened then open that screen
+                            >
+                                <BackIcon width={22} height={22} />
+                            </Pressable>
+                            <Minimap heading={heading} badges={[{ ...destinationCoords, imageUrl: badgeData?.Image }]} userLocation={coords} />
+                            <Pressable
+                                style={styles.button}
+                                onPress={() => navigation.push(screenNames.map, { badge, type, task, isQuiz, badgeData, taskData, givenData, destinationCoords })} //Go to Map screen if not opened, and if it is opened then open that screen
+                            >
+                                <Image source={mapIcon}
+                                    style={{
+                                        width: 24,
+                                        height: 24,
+                                        resizeMode: 'contain',
+                                        tintColor: 'white', // makes black PNG render as white
+                                    }}
+                                />
+                            </Pressable>
                         </Animated.View>)}
                 </>
                 :

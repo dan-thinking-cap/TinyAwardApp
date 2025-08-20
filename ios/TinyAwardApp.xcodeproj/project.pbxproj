@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		6E0818960C297017CE729C41 /* libPods-TinyAwardApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F9DB58B6B9CD99B65BC621B /* libPods-TinyAwardApp.a */; };
+		4AFB8111700EB7822CC1CBDF /* libPods-TinyAwardApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E767B81920BC2615A6ECEC7D /* libPods-TinyAwardApp.a */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		C2F723337B77137A5B57B2EF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
@@ -19,15 +19,15 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = TinyAwardApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TinyAwardApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = TinyAwardApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		2390C98E299B0A4673A1BC7B /* Pods-TinyAwardApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinyAwardApp.debug.xcconfig"; path = "Target Support Files/Pods-TinyAwardApp/Pods-TinyAwardApp.debug.xcconfig"; sourceTree = "<group>"; };
 		2C209F232E4D2A7F00EE151B /* libreact-native-unity.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libreact-native-unity.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C209F252E4D2B1500EE151B /* UnityFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UnityFramework.framework; path = ../unity/builds/ios/UnityFramework.framework; sourceTree = "<group>"; };
 		2C209F292E4D2CB500EE151B /* Xcode.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = Xcode.app; path = ../../../../../../Applications/Xcode.app; sourceTree = "<group>"; };
 		2C209F2B2E4D2D6F00EE151B /* UnityFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UnityFramework.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Unity-iPhone-byhcsudkedhhbocqxhhrmujdwckb/Build/Products/Debug-iphoneos/UnityFramework.framework"; sourceTree = "<group>"; };
+		679E5D3BD8CC5810302EEEB3 /* Pods-TinyAwardApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinyAwardApp.debug.xcconfig"; path = "Target Support Files/Pods-TinyAwardApp/Pods-TinyAwardApp.debug.xcconfig"; sourceTree = "<group>"; };
+		7088FE4F888C5B21DC119908 /* Pods-TinyAwardApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinyAwardApp.release.xcconfig"; path = "Target Support Files/Pods-TinyAwardApp/Pods-TinyAwardApp.release.xcconfig"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = TinyAwardApp/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = TinyAwardApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		9F9DB58B6B9CD99B65BC621B /* libPods-TinyAwardApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TinyAwardApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E8BC0EF2416F41FE6DBE1F47 /* Pods-TinyAwardApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinyAwardApp.release.xcconfig"; path = "Target Support Files/Pods-TinyAwardApp/Pods-TinyAwardApp.release.xcconfig"; sourceTree = "<group>"; };
+		E767B81920BC2615A6ECEC7D /* libPods-TinyAwardApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TinyAwardApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -36,7 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E0818960C297017CE729C41 /* libPods-TinyAwardApp.a in Frameworks */,
+				4AFB8111700EB7822CC1CBDF /* libPods-TinyAwardApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,7 +63,7 @@
 				2C209F252E4D2B1500EE151B /* UnityFramework.framework */,
 				2C209F232E4D2A7F00EE151B /* libreact-native-unity.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				9F9DB58B6B9CD99B65BC621B /* libPods-TinyAwardApp.a */,
+				E767B81920BC2615A6ECEC7D /* libPods-TinyAwardApp.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -100,8 +100,8 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				2390C98E299B0A4673A1BC7B /* Pods-TinyAwardApp.debug.xcconfig */,
-				E8BC0EF2416F41FE6DBE1F47 /* Pods-TinyAwardApp.release.xcconfig */,
+				679E5D3BD8CC5810302EEEB3 /* Pods-TinyAwardApp.debug.xcconfig */,
+				7088FE4F888C5B21DC119908 /* Pods-TinyAwardApp.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -113,13 +113,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "TinyAwardApp" */;
 			buildPhases = (
-				93923E1973CD584195C0A667 /* [CP] Check Pods Manifest.lock */,
+				BB63D806864003DB4809F111 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				BF110C25B7C488A6C15D844E /* [CP] Embed Pods Frameworks */,
-				B148D52867240DB8C5FCC047 /* [CP] Copy Pods Resources */,
+				5CC6C0D4B98FA9C0DB035CA4 /* [CP] Embed Pods Frameworks */,
+				5B1D7229ECE31A785299751A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -191,7 +191,41 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		93923E1973CD584195C0A667 /* [CP] Check Pods Manifest.lock */ = {
+		5B1D7229ECE31A785299751A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TinyAwardApp/Pods-TinyAwardApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TinyAwardApp/Pods-TinyAwardApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TinyAwardApp/Pods-TinyAwardApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5CC6C0D4B98FA9C0DB035CA4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TinyAwardApp/Pods-TinyAwardApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TinyAwardApp/Pods-TinyAwardApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TinyAwardApp/Pods-TinyAwardApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BB63D806864003DB4809F111 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -213,40 +247,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B148D52867240DB8C5FCC047 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TinyAwardApp/Pods-TinyAwardApp-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TinyAwardApp/Pods-TinyAwardApp-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TinyAwardApp/Pods-TinyAwardApp-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BF110C25B7C488A6C15D844E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TinyAwardApp/Pods-TinyAwardApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TinyAwardApp/Pods-TinyAwardApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TinyAwardApp/Pods-TinyAwardApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -263,7 +263,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2390C98E299B0A4673A1BC7B /* Pods-TinyAwardApp.debug.xcconfig */;
+			baseConfigurationReference = 679E5D3BD8CC5810302EEEB3 /* Pods-TinyAwardApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -401,7 +401,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E8BC0EF2416F41FE6DBE1F47 /* Pods-TinyAwardApp.release.xcconfig */;
+			baseConfigurationReference = 7088FE4F888C5B21DC119908 /* Pods-TinyAwardApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
