@@ -8,3 +8,11 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
 # Add any project specific keep options here:
+
+# Unity player classes
+-keep class com.unity3d.player.** { *; }
+-dontwarn com.unity3d.player.**
+
+# RN–Unity bridge (react-native-unity)
+-keep class com.azesmway.reactnativeunity.** { *; }
+-dontwarn com.azesmway.reactnativeunity.**

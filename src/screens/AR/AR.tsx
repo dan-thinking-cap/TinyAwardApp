@@ -117,6 +117,19 @@ const AR = () => {
         }
     }, [unityReady]);
 
+    useEffect(() => {
+        const t = setTimeout(() => {
+            setUnityReady(prev => {
+                if (prev === false) {
+                    return true; // force ready after 3s
+                }
+                return prev; // already true, don't overwrite
+            });
+        }, 3000);
+
+        return () => clearTimeout(t);
+    }, []);
+
     return (
         <View style={styles.container}>
             {ready ?
@@ -135,7 +148,7 @@ const AR = () => {
                             >
                                 <BackIcon width={22} height={22} />
                             </Pressable>
-                            <Minimap heading={heading} badges={[{ ...destinationCoords, imageUrl: badgeData?.Image }]} userLocation={coords} />
+                            <Minimap heading={heading} badges={[{ ...destinationCoords, imageUrl: badgeData?.Image }]} />
                             <Pressable
                                 style={styles.button}
                                 onPress={() => navigation.push(screenNames.map, { badge, type, task, isQuiz, badgeData, taskData, givenData, destinationCoords })} //Go to Map screen if not opened, and if it is opened then open that screen
