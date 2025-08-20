@@ -125,7 +125,7 @@ const AR = () => {
                 }
                 return prev; // already true, don't overwrite
             });
-        }, 3000);
+        }, 4000);
 
         return () => clearTimeout(t);
     }, []);
