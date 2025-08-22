@@ -30,8 +30,8 @@ android {
         applicationId "com.tinyaward.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "1.2"
+        versionCode 8
+        versionName "1.2.1"
         manifestPlaceholders = [
             appAuthRedirectScheme: "msauth.com.tinyaward.app",
             googleMapsApiKey: googleMapsApiKey
