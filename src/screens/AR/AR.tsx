@@ -1,5 +1,5 @@
-import { useRoute } from '@react-navigation/native';
-import React, { useRef, useEffect, useState } from 'react';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { View, StyleSheet, Pressable, Text, Image, Animated } from 'react-native';
 import UnityView from '@azesmway/react-native-unity/src/UnityView';
 import { useGeolocation } from '../../hooks/useGeolocation';
@@ -20,10 +20,9 @@ const AR = () => {
     const unityRef = useRef<UnityView>(null);
     const [unityReady, setUnityReady] = useState(false);
     const [keepViewMounted, setKeepViewMounted] = useState(false)
-    // const [paused, setPaused] = useState(false)
     const [fadeAnim] = useState(new Animated.Value(0));
     const { userID } = useAppSelector(state => state.user)
-    const { badge, type, task, isQuiz, badgeData, taskData, givenData, destinationCoords: destCoords } =
+    const { badge, type, task, isQuiz, badgeData, taskData, givenData, destinationCoords: destCoords, unityOpened } =
         (route?.params as any) || {};
     const {
         coords,
@@ -56,7 +55,6 @@ const AR = () => {
 
         if (message === "Badge Completed") {
             handleCompletedTask({ userID, task, type, badge })
-            // unityRef.current?.unloadUnity()
         }
     }
 
@@ -83,16 +81,7 @@ const AR = () => {
     }
 
     const handleBack = () => {
-        // if (paused){
-        //     unityRef.current?.pauseUnity(true)
-        // } else {
-        //     unityRef.current?.resumeUnity()
-        // }
-        // setPaused(prev => !prev)
-        // // unityRef.current?.unloadUnity()
-        // setKeepViewMounted(false)
-        //Combine this with useFocusEffect to make the screen pause and unpause when it isn't in view
-        navigation.goBack()
+        navigation.push(screenNames.awardDetails, { data: givenData, prevScreen: 'AR' });
     }
 
     useEffect(() => {
@@ -117,18 +106,34 @@ const AR = () => {
         }
     }, [unityReady]);
 
-    useEffect(() => {
-        const t = setTimeout(() => {
-            setUnityReady(prev => {
-                if (prev === false) {
-                    return true; // force ready after 3s
-                }
-                return prev; // already true, don't overwrite
-            });
-        }, 4000);
+    useFocusEffect(
+        useCallback(() => {
+            unityRef.current?.resumeUnity();
+            return () => {
+                unityRef.current?.pauseUnity(true);
+            };
+        }, [unityOpened])
+    );
 
-        return () => clearTimeout(t);
-    }, []);
+    useEffect(() => {
+        let timeout: NodeJS.Timeout
+        if (unityOpened!!) {
+            setUnityReady(true);
+        } else {
+            timeout = setTimeout(() => {
+                setUnityReady(prev => {
+                    if (!prev) {
+                        return true; // only update if still false
+                    }
+                    return prev;
+                });
+            }, 5000);
+        }
+        // cleanup to prevent memory leaks if the component unmounts
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, [unityOpened]);
 
     return (
         <View style={styles.container}>
@@ -140,29 +145,33 @@ const AR = () => {
                         onUnityMessage={evt => handleUnityMessage(evt)}
                         androidKeepPlayerMounted={keepViewMounted}
                     />
-                    {unityReady && (
-                        <Animated.View style={[styles.buttonContainer, { opacity: fadeAnim }]}>
-                            <Pressable
-                                style={styles.button}
-                                onPress={handleBack} //Go to Map screen if not opened, and if it is opened then open that screen
-                            >
-                                <BackIcon width={22} height={22} />
-                            </Pressable>
-                            <Minimap heading={heading} badges={[{ ...destinationCoords, imageUrl: badgeData?.Image }]} />
-                            <Pressable
-                                style={styles.button}
-                                onPress={() => navigation.push(screenNames.map, { badge, type, task, isQuiz, badgeData, taskData, givenData, destinationCoords })} //Go to Map screen if not opened, and if it is opened then open that screen
-                            >
-                                <Image source={mapIcon}
-                                    style={{
-                                        width: 24,
-                                        height: 24,
-                                        resizeMode: 'contain',
-                                        tintColor: 'white', // makes black PNG render as white
-                                    }}
-                                />
-                            </Pressable>
-                        </Animated.View>)}
+                    <View style={styles.buttonContainer}>
+                        <Pressable
+                            style={styles.button}
+                            onPress={handleBack} //Go to Map screen if not opened, and if it is opened then open that screen
+                        >
+                            <BackIcon width={22} height={22} />
+                        </Pressable>
+                        {unityReady && (
+                            <Animated.View style={[{ opacity: fadeAnim }]}>
+                                <Minimap heading={heading} badges={[{ ...destinationCoords, imageUrl: badgeData?.Image }]} />
+                            </Animated.View>
+
+                        )}
+                        <Pressable
+                            style={styles.button}
+                            onPress={() => navigation.push(screenNames.map, { badge, type, task, isQuiz, badgeData, taskData, givenData, destinationCoords })} //Go to Map screen if not opened, and if it is opened then open that screen
+                        >
+                            <Image source={mapIcon}
+                                style={{
+                                    width: 24,
+                                    height: 24,
+                                    resizeMode: 'contain',
+                                    tintColor: 'white', // makes black PNG render as white
+                                }}
+                            />
+                        </Pressable>
+                    </View>
                 </>
                 :
                 <Spinner />
@@ -180,7 +189,8 @@ const styles = StyleSheet.create({
         right: 20,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        zIndex: 10
     },
     button: {
         backgroundColor: 'rgba(30, 0, 255, 0.75)',

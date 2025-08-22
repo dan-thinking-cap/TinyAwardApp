@@ -54,6 +54,8 @@ const AwardDetails = () => {
   const { userData } = useAppSelector(state => state.user);
   const [isLocationBased, setIsLocationBased] = useState(false)
   const [geoLocation, setGeolocation] = useState<{ lat: Number, long: number } | null>(null)
+  const { prevScreen } =
+    (route?.params as any) || {};
   // let userId = (userData?.id?.length > 2 ? userData?.id : data?.userId) || (data?.userId?.length > 2 ? data?.userId : userData?.id);
   let userId = data?.userId;
   let name = data?.name;
@@ -129,7 +131,8 @@ const AwardDetails = () => {
         badgeData,
         taskData,
         givenData: data,
-        destinationCoords: geoLocation
+        destinationCoords: geoLocation,
+        unityOpened: prevScreen !== null && prevScreen !== undefined && prevScreen === 'AR'
       });
     } else {
       navigation.push(screenNames.companyPreview, {
@@ -218,7 +221,7 @@ const AwardDetails = () => {
     };
     try {
       const { response, error } = await getUserDetails(request);
-      console.log()
+      // console.log(response)
 
       if (typeof (response?.Tasks.pages[0].geoLocation) === 'string') {
         const { geoLocation } = response.Tasks.pages[0]
